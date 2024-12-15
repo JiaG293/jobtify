@@ -58,7 +58,9 @@ docker exec kafka kafka-topics --create \
 docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 -v <Nơi lưu file redis.conf>:/etc/redis/redis.conf redis/redis-stack:latest
 ```
 
-
+```
+docker run -itd -e POSTGRES_USER=jiag -e POSTGRES_PASSWORD=20053331 -p 5432:5432 -v /home/$USER/postgresql/data:/var/lib/postgresql/data --name postgresql postgres:17.0-bookworm
+```
 
 Sau cài đặt xong các service thay đổi ở application.yaml 
 [aplication.yaml identity-service](identity-service/src/main/resources/application.yml)
