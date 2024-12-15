@@ -12,9 +12,9 @@ spring:
   application:
     name: identity-service
   datasource:
-    url: jdbc:postgresql://192.168.1.251:5432/test
-    username: jiag
-    password: 20053331
+    url: jdbc:postgresql://192.168.1.251:5432/test #CẦN THAY ĐỔI
+    username: jiag #CẦN THAY ĐỔI
+    password: 20053331 #CẦN THAY ĐỔI
     driver-class-name: org.postgresql.Driver
     dbcp2:
       default-schema: identity_service
@@ -33,10 +33,10 @@ spring:
     defer-datasource-initialization: true #Ngan insert data sql truoc khi jpa duoc tao
   data:
     redis:
-      host: 192.168.1.251
-      port: 6379
-      username: jiag
-      password: 20053331
+      host: 192.168.1.251 #CẦN THAY ĐỔI
+      port: 6379 #CẦN THAY ĐỔI NẾU DÙNG FILE CONFIG KHÁC
+      username: jiag #CẦN THAY ĐỔI NẾU DÙNG FILE CONFIG KHÁC
+      password: 20053331 #CẦN THAY ĐỔI NẾU DÙNG FILE CONFIG KHÁC
       ttl: 1 #days
   jackson:
     deserialization:
@@ -47,7 +47,7 @@ spring:
       data-locations: classpath:database/data_indentity_service.sql #insert data
       schema-locations: classpath:database/schema_identity_service.sql #tao schema
   kafka:
-    bootstrap-servers: 192.168.1.251:9092
+    bootstrap-servers: 192.168.1.251:9092 #CẦN THAY ĐỔI
     listener:
       missing-topics-fatal: false
     consumer:
