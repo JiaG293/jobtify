@@ -6,9 +6,9 @@ spring:
   application:
     name: jobtify-service
   datasource:
-    url: jdbc:postgresql://192.168.1.251:5432/test
-    username: jiag
-    password: 20053331
+    url: jdbc:postgresql://192.168.1.251:5432/test #CẦN THAY ĐỔI
+    username: jiag #CẦN THAY ĐỔI
+    password: 20053331 #CẦN THAY ĐỔI
     driver-class-name: org.postgresql.Driver
     dbcp2:
       default-schema: jobtify_service
@@ -34,7 +34,7 @@ spring:
       data-locations: classpath:database/data_jobtify_service.sql #insert data
       schema-locations: classpath:database/schema_jobtify_service.sql #tao schema
   kafka:
-    bootstrap-servers: 192.168.1.251:9092
+    bootstrap-servers: 192.168.1.251:9092 #CẦN THAY ĐỔI
     consumer:
       group-id: jobtify-group
       auto-offset-reset: earliest
