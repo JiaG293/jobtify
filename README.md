@@ -1,3 +1,10 @@
+
+Redis
+Kafka
+Postgresql
+
+
+
 LINUX
 
 
@@ -50,3 +57,10 @@ docker exec kafka kafka-topics --create \
 ```
 docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 -v <Nơi lưu file redis.conf>:/etc/redis/redis.conf redis/redis-stack:latest
 ```
+
+
+
+Sau cài đặt xong các service thay đổi ở application.yaml 
+[aplication.yaml identity-service](identity-service/src/main/resources/application.yml)
+[aplication.yaml jobtify-service](jobtify-service/src/main/resources/application.yaml)
+
