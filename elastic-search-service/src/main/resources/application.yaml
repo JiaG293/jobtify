@@ -1,0 +1,39 @@
+servlet:
+  port: 8082
+  context-path: /elastic-search
+jwt:
+  signer-key: LnnRceIhXhXxOTcWPOPS3XfZF//VpFUC9GuB0NuNOkHZ3F1iWWNRzDRREY0hTBRJ+nAHTX+P9grOGN6ZM6LMug==
+  valid-duration: 3600 #seconds
+  #  valid-duration: 10 #seconds
+  refreshable-duration: 3600 #seconds
+
+spring:
+  application:
+    name: elastic-search-service
+  data:
+    redis:
+      host: 192.168.1.251
+      port: 6379
+      username: jiag
+      password: 20053331
+      ttl: 1 #days
+    mongodb:
+      uri: mongodb://localhost:27017/jobtify_db
+      database: jobtify_db
+  kafka:
+    bootstrap-servers: 192.168.1.251:9092
+    listener:
+      missing-topics-fatal: false
+    consumer:
+      group-id: elastic-search-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.trusted.packages: "*"
+
