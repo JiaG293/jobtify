@@ -1,0 +1,1642 @@
+{
+	"info": {
+		"_postman_id": "623e69bb-25e2-4af6-be80-9bc41f9fd63d",
+		"name": "jobtify-server",
+		"description": "This template contains a boilerplate for documentation that you can quickly customize and reuse.\n\n### How to use this template:\n\n- Replace the content given brackets (()) with your API's details.\n    \n- Tips are formatted in `codespan` - feel free to read and remove them.\n    \n\n---\n\n`Start with a brief overview of what your API offers.`\n\nThe ((product name)) provides many API products, tools, and resources that enable you to ((add product value here)).\n\n`You can also list the APIs you offer, link to the relevant pages, or do both in this section.`\n\n## **Getting started guide**\n\n`List the steps or points required to start using your APIs. Make sure to cover everything required to reach success with your API as quickly as possible.`\n\nTo start using the ((add APIs here)), you need to -\n\n`The points given below are from The Postman API's documentation. You can reference it to write your own getting started guide.`\n\n- You must use a valid API Key to send requests to the API endpoints. You can get your API key from Postman's [integrations dashboard](https://go.postman.co/settings/me/api-keys).\n    \n- The API has [rate and usage limits](https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/).\n    \n- The API only responds to HTTPS-secured communications. Any requests sent via HTTP return an HTTP 301 redirect to the corresponding HTTPS resources.\n    \n- The API returns request responses in JSON format. When an API request returns an error, it is sent in the JSON response as an error key.\n    \n\n## Authentication\n\n`Add details on the authorization keys/tokens required, steps that cover how to get them, and the relevant error codes.`\n\nThe ((product name)) API uses ((add your API's authorization type)) for authentication.\n\n`The details given below are from the Postman API's documentation. You can reference it to write your own authentication section.`\n\nPostman uses API keys for authentication. You can generate a Postman API key in the [API keys](https://postman.postman.co/settings/me/api-keys) section of your Postman account settings.\n\nYou must include an API key in each request to the Postman API with the X-Api-Key request header.\n\n### Authentication error response\n\nIf an API key is missing, malformed, or invalid, you will receive an HTTP 401 Unauthorized response code.\n\n## Rate and usage limits\n\n`Use this section to cover your APIs' terms of use. Include API limits, constraints, and relevant error codes, so consumers understand the permitted API usage and practices.`\n\n`The example given below is from The Postman API's documentation. Use it as a reference to write your APIs' terms of use.`\n\nAPI access rate limits apply at a per-API key basis in unit time. The limit is 300 requests per minute. Also, depending on your plan, you may have usage limits. If you exceed either limit, your request will return an HTTP 429 Too Many Requests status code.\n\nEach API response returns the following set of headers to help you identify your use status:\n\n| Header | Description |\n| --- | --- |\n| `X-RateLimit-Limit` | The maximum number of requests that the consumer is permitted to make per minute. |\n| `X-RateLimit-Remaining` | The number of requests remaining in the current rate limit window. |\n| `X-RateLimit-Reset` | The time at which the current rate limit window resets in UTC epoch seconds. |\n\n### 503 response\n\nAn HTTP `503` response from our servers indicates there is an unexpected spike in API access traffic. The server is usually operational within the next five minutes. If the outage persists or you receive any other form of an HTTP `5XX` error, [contact support](https://support.postman.com/hc/en-us/requests/new/).\n\n### **Need some help?**\n\n`Add links that customers can refer to whenever they need help.`\n\nIn case you have questions, go through our tutorials ((link to your video or help documentation here)). Or visit our FAQ page ((link to the relevant page)).\n\nOr you can check out our community forum, there’s a good chance our community has an answer for you. Visit our developer forum ((link to developer forum)) to review topics, ask questions, and learn from others.\n\n`You can also document or add links to libraries, code examples, and other resources needed to make a request.`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32543688"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Save token from response to environment variable\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.environment.set(\"jwt_token\", jsonData.result.token);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//ADMIN\r\n/* {\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n} */\r\n\r\n//USER CANDIDATE\r\n{\r\n    \"username\": \"giau\",\r\n    \"password\": \"123\"\r\n}\r\n\r\n//USER COMPANY\r\n/* {\r\n    \"username\": \"vietcombankcompany\",\r\n    \"password\": \"123\"\r\n} */\r\n\r\n/* {\r\n    \"username\": \"techcompany\",\r\n    \"password\": \"123\"\r\n} */",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/identity/auth/login",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"identity",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"{{jwt_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/auth/refresh",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "introspect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"{{jwt_token}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/identity/auth/introspect",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"identity",
+								"auth",
+								"introspect"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				}
+			],
+			"description": "The `/me` endpoints let you manage information about the authenticated user."
+		},
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "my-info-gate-way",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n//default\r\n{\r\n    \"username\": \"user\",\r\n    \"password\": \"user\",\r\n    \"email\": \"asgy2002@gmai.com\",\r\n    \"dob\": \"29-03-2002\",\r\n    \"firstName\": \"Nguyen Van\",\r\n    \"lastName\": \"User1\",\r\n    \"phone\": \"09014100001\",\r\n    \"address\": \"Binh Chanh, Ho Chi Minh, Viet Nam\"\r\n}\r\n\r\n\r\n//email 1 ky tu\r\n/* {\r\n    \"username\": \"user\",\r\n    \"password\": \"user\",\r\n    \"email\": \"a@gmai.com\",\r\n    \"dob\": \"29-03-2002\",\r\n    \"firstName\": \"Nguyen Van\",\r\n    \"lastName\": \"User1\",\r\n    \"phone\": \"09014100001\",\r\n    \"address\": \"Binh Chanh, Ho Chi Minh, Viet Nam\"\r\n} */",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/identity/users/my-info",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"identity",
+								"users",
+								"my-info"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "register gateway",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n//CANDIDATE\r\n{\r\n    //candidate info\r\n    \"username\": \"user\",\r\n    \"password\": \"user\",\r\n    \"email\": \"asgy2002@gmail.com\",\r\n    \"phone\": \"0901410999\",\r\n    \"fullName\": \"Nguyen Van User1\",\r\n    \"dob\": \"29-03-2002\",\r\n    //address info\r\n    \"country\": \"VN\",\r\n    \"number\": \"55\",\r\n    \"street\": \"Lai Hung Cuong\",\r\n    \"city\": \"Ho Chi Minh\",\r\n    \"zipcode\": \"700031\",\r\n    //type register\r\n    \"type\": \"candidate\"\r\n}\r\n\r\n\r\n//COMPANY\r\n/* {\r\n    //company info\r\n    \"username\": \"company\",\r\n    \"password\": \"company\",\r\n    \"email\": \"tuyendung@company.com\",\r\n    \"emailInfo\": \"chinhanh.tuyendung@company.com\",\r\n    \"fullName\": \"Duong Hoang Tan\",\r\n    \"name\": \"tech company\", //ten cong ty\r\n    \"webURL\": \"company.com\",\r\n    \"phone\": \"09014100002\",\r\n    \"about\": \"tech\",\r\n    //address info\r\n    \"country\": \"VN\",\r\n    \"number\": \"3210941\", //so nhan\r\n    \"street\": \"Vo Van Van\",\r\n    \"city\": \"Ho Chi Minh\",\r\n    \"zipcode\": \"700033\",\r\n    //type register\r\n    \"type\": \"company\" //COMPANY\r\n} */",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/identity/users/register",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"identity",
+								"users",
+								"register"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						},
+						{
+							"name": "register gateway",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n//CANDIDATE\r\n{\r\n    //candidate info\r\n    \"username\": \"user\",\r\n    \"password\": \"user\",\r\n    \"email\": \"asgy2002@gmail.com\",\r\n    \"phone\": \"0901410099\",\r\n    \"fullName\": \"Nguyen Van User1\",\r\n    \"dob\": \"29-03-2002\",\r\n    //address info\r\n    \"country\": \"VN\",\r\n    \"number\": \"55\",\r\n    \"street\": \"Lai Hung Cuong\",\r\n    \"city\": \"Ho Chi Minh\",\r\n    \"zipcode\": \"700031\",\r\n    //type register\r\n    \"type\": \"candidate\"\r\n}\r\n\r\n\r\n//COMPANY\r\n/* {\r\n    //company info\r\n    \"username\": \"company\",\r\n    \"password\": \"company\",\r\n    \"email\": \"tuyendung@company.com\",\r\n    \"emailInfo\": \"chinhanh.tuyendung@company.com\",\r\n    \"fullName\": \"Duong Hoang Tan\",\r\n    \"name\": \"tech company\", //ten cong ty\r\n    \"webURL\": \"company.com\",\r\n    \"phone\": \"09014100002\",\r\n    \"about\": \"tech\",\r\n    //address info\r\n    \"country\": \"VN\",\r\n    \"number\": \"3210941\", //so nhan\r\n    \"street\": \"Vo Van Van\",\r\n    \"city\": \"Ho Chi Minh\",\r\n    \"zipcode\": \"700033\",\r\n    //type register\r\n    \"type\": \"company\" //COMPANY\r\n} */",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host_gateway}}/api/v1/identity/users/register",
+									"host": [
+										"{{host_gateway}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"identity",
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Dec 2024 02:08:53 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1000,\n    \"result\": {\n        \"id\": \"c71e1a5a-be99-4b11-8ae8-8176debc3f68\",\n        \"username\": \"user\",\n        \"email\": \"as***02@gmail.com\",\n        \"phone\": \"0901**99\",\n        \"fullName\": \"Nguyen Van User1\",\n        \"roles\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-gateway}}/api/v1/security/users",
+							"host": [
+								"{{host-gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"security",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CANDIDATE",
+			"item": [
+				{
+					"name": "create-candidate-skill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"skillId\": \"8af179f9-01bc-4cce-b5b4-c1c58a69bb6f\",\r\n    \"skillLevel\": \"BEGINNER\",\r\n    \"moreInfo\": \"bla bla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/candidates/skills",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"candidates",
+								"skills"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update-candidate-skill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"skillId\": \"8af179f9-01bc-4cce-b5b4-c1c58a69bb6f\",\r\n    \"skillLevel\": \"MASTER\",\r\n    \"moreInfo\": \"Do something!!!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/candidates/skills",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"candidates",
+								"skills"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "job-suggest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/jobs/suggest",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"jobs",
+								"suggest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SKILL",
+			"item": [
+				{
+					"name": "list-skill-page (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/skills?p=2",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"skills"
+							],
+							"query": [
+								{
+									"key": "p",
+									"value": "2",
+									"description": "page"
+								},
+								{
+									"key": "s",
+									"value": "3",
+									"description": "size",
+									"disabled": true
+								},
+								{
+									"key": "sb",
+									"value": "skillName",
+									"description": "sort by",
+									"disabled": true
+								},
+								{
+									"key": "sd",
+									"value": "desc",
+									"description": "sort direction",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-skill-base (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"skillName\": \"RUST1\",\r\n    \"type\": \"TECHNICAL_SKILL\",\r\n    \"skillDescription\": \"description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/skills",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"skills"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-skill-base (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "/* {\r\n    \"skillName\": \"rust1\",\r\n    \"type\": \"TECHNICAL_SKILL\",\r\n    \"skillDescription\": \"description\"\r\n} */\r\n\r\n\r\n/* {\r\n    \"skillName\": \"rust11111\",\r\n    \"type\": \"\",\r\n    \"skillDescription\": \"rust1111111111111\"\r\n} */\r\n\r\n\r\n\r\n{\r\n    \"skillName\": \"Svelte\",\r\n    \"type\": \"TECHNICAL_SKILL\",\r\n    \"skillDescription\": \"Javascript framework\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/skills/39de6d57-4d08-4725-b291-c5269251ff38",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"skills",
+								"39de6d57-4d08-4725-b291-c5269251ff38"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete skill (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/skills/{{skillId}}",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"skills",
+								"{{skillId}}"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.getpostman.com/me",
+									"protocol": "https",
+									"host": [
+										"api",
+										"getpostman",
+										"com"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "jobs",
+			"item": [
+				{
+					"name": "create-job-skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"DevOps\",\r\n    \"description\": \"require: +2 years, net salary up to: 30m VND\",\r\n    \"jobSkills\": [\r\n        {\r\n            \"skillId\": \"712026e9-f397-4972-9723-0d23e9fa083f\",\r\n            \"skillLevel\": \"ADVANCED\",\r\n            \"moreInfo\": \"Do something!!\"\r\n        },\r\n        {\r\n            \"skillId\": \"4544e574-2604-4110-ab58-de8d534081a0\",\r\n            \"skillLevel\": \"ADVANCED\",\r\n            \"moreInfo\": \"Do something!!\"\r\n        },\r\n        {\r\n            \"skillId\": \"39063c19-713b-4150-aee7-20697fa6b0ee\",\r\n            \"skillLevel\": \"ADVANCED\",\r\n            \"moreInfo\": \"Do something!!\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/jobs",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-job-skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/jobs/{{job_id}}/skills/{{skill_id}}",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"jobs",
+								"{{job_id}}",
+								"skills",
+								"{{skill_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-job-skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/jobs",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-jobs-page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/jobs",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "s",
+									"value": "10",
+									"description": "size",
+									"disabled": true
+								},
+								{
+									"key": "sb",
+									"value": "skillName",
+									"description": "sort by",
+									"disabled": true
+								},
+								{
+									"key": "sd",
+									"value": "desc",
+									"description": "sort direction",
+									"disabled": true
+								},
+								{
+									"key": "p",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list-skill-page success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host_gateway}}/api/v1/jobtify/jobs?p=1",
+									"host": [
+										"{{host_gateway}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"jobtify",
+										"jobs"
+									],
+									"query": [
+										{
+											"key": "s",
+											"value": "10",
+											"description": "size",
+											"disabled": true
+										},
+										{
+											"key": "sb",
+											"value": "skillName",
+											"description": "sort by",
+											"disabled": true
+										},
+										{
+											"key": "sd",
+											"value": "desc",
+											"description": "sort direction",
+											"disabled": true
+										},
+										{
+											"key": "p",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 15 Dec 2024 04:30:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1000,\n    \"result\": {\n        \"content\": [\n            {\n                \"id\": \"7f23be00-8e64-4fc6-a717-d7c10c92cc60\",\n                \"name\": \"UI/UX Designer\",\n                \"description\": \"Design user interfaces and improve user experience for web applications\",\n                \"jobSkills\": [\n                    {\n                        \"skill\": {\n                            \"id\": \"3756ac1c-abe5-41c7-a77a-bb0337a54ca6\",\n                            \"skillName\": \"IoT Solutions\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Creating IoT architectures and systems\"\n                        },\n                        \"company\": {\n                            \"id\": \"922a7248-f499-41cf-a163-536f9ef093cf\",\n                            \"name\": \"LG\",\n                            \"address\": {\n                                \"id\": \"9a1f2223-215b-4bf8-b560-7ad13b2eb465\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"539\",\n                                \"street\": \"Cong Hoa\"\n                            },\n                            \"webURL\": \"https://lg.com.vn\",\n                            \"phone\": \"0987654321\",\n                            \"email\": \"tuyendung@lg.com.vn\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"INTERMEDIATE\",\n                        \"moreInfo\": \"IoT expertise is required for system integrations.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"59721847-17dc-41b2-9ae0-0e6619ecb2dd\",\n                            \"skillName\": \"AI Research\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Exploring AI models and solutions\"\n                        },\n                        \"company\": {\n                            \"id\": \"922a7248-f499-41cf-a163-536f9ef093cf\",\n                            \"name\": \"LG\",\n                            \"address\": {\n                                \"id\": \"9a1f2223-215b-4bf8-b560-7ad13b2eb465\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"539\",\n                                \"street\": \"Cong Hoa\"\n                            },\n                            \"webURL\": \"https://lg.com.vn\",\n                            \"phone\": \"0987654321\",\n                            \"email\": \"tuyendung@lg.com.vn\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"PROFESSIONAL\",\n                        \"moreInfo\": \"AI research experience is critical for innovation.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"69cd6e0f-416e-4a4f-88eb-7a8d9a2dd591\",\n                            \"skillName\": \"Blockchain\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Implementing decentralized solutions\"\n                        },\n                        \"company\": {\n                            \"id\": \"922a7248-f499-41cf-a163-536f9ef093cf\",\n                            \"name\": \"LG\",\n                            \"address\": {\n                                \"id\": \"9a1f2223-215b-4bf8-b560-7ad13b2eb465\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"539\",\n                                \"street\": \"Cong Hoa\"\n                            },\n                            \"webURL\": \"https://lg.com.vn\",\n                            \"phone\": \"0987654321\",\n                            \"email\": \"tuyendung@lg.com.vn\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"BEGINNER\",\n                        \"moreInfo\": \"Blockchain knowledge is needed for decentralized solutions.\"\n                    }\n                ]\n            },\n            {\n                \"id\": \"83b9e0a6-2fd4-4bd1-9807-cb11915e7e2e\",\n                \"name\": \"Web Developer\",\n                \"description\": \"Optimize website performance and improve SEO\",\n                \"jobSkills\": []\n            },\n            {\n                \"id\": \"90402e38-4ff6-40e9-ae54-378fa661428b\",\n                \"name\": \"AI Researcher\",\n                \"description\": \"Conduct research and develop AI-based systems\",\n                \"jobSkills\": []\n            },\n            {\n                \"id\": \"93403150-dec1-4a80-b28c-8ea9cd3861a8\",\n                \"name\": \"Data Scientist\",\n                \"description\": \"Create machine learning models for predictive analytics\",\n                \"jobSkills\": [\n                    {\n                        \"skill\": {\n                            \"id\": \"323bdf2d-85f2-4c65-9301-969dbdfe4d85\",\n                            \"skillName\": \"UI/UX Design\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Improving user interfaces and user experience\"\n                        },\n                        \"company\": {\n                            \"id\": \"3601c6a4-2fad-41d2-82bb-e789cbc98f34\",\n                            \"name\": \"Finance Inc\",\n                            \"address\": {\n                                \"id\": \"6fc237db-d35e-43e1-bae2-566c88a1d640\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"449\",\n                                \"street\": \"Vo Nguyen Giap\"\n                            },\n                            \"webURL\": \"https://financeinc.com\",\n                            \"phone\": \"0111111111\",\n                            \"email\": \"hire@financeinc.com\",\n                            \"about\": \"A leading finance company\"\n                        },\n                        \"skillLevel\": \"INTERMEDIATE\",\n                        \"moreInfo\": \"UI/UX design is necessary for improving the user experience.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"43a73084-ecf4-4e29-b009-7612e642d78e\",\n                            \"skillName\": \"DevOps\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"CI/CD pipeline creation and maintenance\"\n                        },\n                        \"company\": {\n                            \"id\": \"3601c6a4-2fad-41d2-82bb-e789cbc98f34\",\n                            \"name\": \"Finance Inc\",\n                            \"address\": {\n                                \"id\": \"6fc237db-d35e-43e1-bae2-566c88a1d640\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"449\",\n                                \"street\": \"Vo Nguyen Giap\"\n                            },\n                            \"webURL\": \"https://financeinc.com\",\n                            \"phone\": \"0111111111\",\n                            \"email\": \"hire@financeinc.com\",\n                            \"about\": \"A leading finance company\"\n                        },\n                        \"skillLevel\": \"BEGINNER\",\n                        \"moreInfo\": \"DevOps skills are essential for maintaining CI/CD pipelines.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"cbf1ebaf-cab8-42e8-93b5-c4aa02f2381f\",\n                            \"skillName\": \"Big Data Analytics\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Processing and analyzing big data sets\"\n                        },\n                        \"company\": {\n                            \"id\": \"3601c6a4-2fad-41d2-82bb-e789cbc98f34\",\n                            \"name\": \"Finance Inc\",\n                            \"address\": {\n                                \"id\": \"6fc237db-d35e-43e1-bae2-566c88a1d640\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"449\",\n                                \"street\": \"Vo Nguyen Giap\"\n                            },\n                            \"webURL\": \"https://financeinc.com\",\n                            \"phone\": \"0111111111\",\n                            \"email\": \"hire@financeinc.com\",\n                            \"about\": \"A leading finance company\"\n                        },\n                        \"skillLevel\": \"ADVANCED\",\n                        \"moreInfo\": \"Big data analytics is required for managing large data sets.\"\n                    }\n                ]\n            },\n            {\n                \"id\": \"94087db2-6b51-45a0-ac45-68fd03a3d788\",\n                \"name\": \"API Developer\",\n                \"description\": \"Develop APIs and integrate third-party services\",\n                \"jobSkills\": []\n            },\n            {\n                \"id\": \"9b03cb4a-dae9-4022-b4ea-c1280d03d30b\",\n                \"name\": \"Technical Lead\",\n                \"description\": \"Oversee software development projects from initiation to completion\",\n                \"jobSkills\": []\n            },\n            {\n                \"id\": \"a12dedb6-559b-4bfa-b877-a4610fc6f86a\",\n                \"name\": \"Network Administrator\",\n                \"description\": \"Manage network infrastructure and ensure cybersecurity measures\",\n                \"jobSkills\": [\n                    {\n                        \"skill\": {\n                            \"id\": \"17c2b261-42cd-40be-a9de-33aed6ef6e86\",\n                            \"skillName\": \"Software Development\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Building software solutions for enterprise\"\n                        },\n                        \"company\": {\n                            \"id\": \"b91eccd8-3f30-4d7a-95f3-487189a23952\",\n                            \"name\": \"Bosch\",\n                            \"address\": {\n                                \"id\": \"b5a0fde3-d070-4179-81a5-a1f49fc65b8c\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"451\",\n                                \"street\": \"Cong Hoa\"\n                            },\n                            \"webURL\": \"https://bosch.com\",\n                            \"phone\": \"0111111114\",\n                            \"email\": \"@bosch.com\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"ADVANCED\",\n                        \"moreInfo\": \"Software development skills are a key requirement.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"712026e9-f397-4972-9723-0d23e9fa083f\",\n                            \"skillName\": \"Networking\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Designing and maintaining network infrastructures\"\n                        },\n                        \"company\": {\n                            \"id\": \"b91eccd8-3f30-4d7a-95f3-487189a23952\",\n                            \"name\": \"Bosch\",\n                            \"address\": {\n                                \"id\": \"b5a0fde3-d070-4179-81a5-a1f49fc65b8c\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"451\",\n                                \"street\": \"Cong Hoa\"\n                            },\n                            \"webURL\": \"https://bosch.com\",\n                            \"phone\": \"0111111114\",\n                            \"email\": \"@bosch.com\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"BEGINNER\",\n                        \"moreInfo\": \"Networking expertise is critical for managing infrastructure.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"7bfcaf95-de8c-45ae-b1ff-3c18fa462d96\",\n                            \"skillName\": \"Game Development\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Design and develop game mechanics\"\n                        },\n                        \"company\": {\n                            \"id\": \"b91eccd8-3f30-4d7a-95f3-487189a23952\",\n                            \"name\": \"Bosch\",\n                            \"address\": {\n                                \"id\": \"b5a0fde3-d070-4179-81a5-a1f49fc65b8c\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"451\",\n                                \"street\": \"Cong Hoa\"\n                            },\n                            \"webURL\": \"https://bosch.com\",\n                            \"phone\": \"0111111114\",\n                            \"email\": \"@bosch.com\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"INTERMEDIATE\",\n                        \"moreInfo\": \"Game development knowledge is needed for this role.\"\n                    }\n                ]\n            },\n            {\n                \"id\": \"a8953c96-06f0-4062-8c24-3ddd3daaaab7\",\n                \"name\": \"DevOps Engineer\",\n                \"description\": \"Create and manage DevOps pipelines for CI/CD\",\n                \"jobSkills\": []\n            },\n            {\n                \"id\": \"d06c4890-1f8d-4f10-8f51-4c7158ff9541\",\n                \"name\": \"Cloud Engineer\",\n                \"description\": \"Create and deploy cloud-native applications\",\n                \"jobSkills\": []\n            },\n            {\n                \"id\": \"d2ff5b5b-943a-4df3-8301-8dc70e76efc2\",\n                \"name\": \"Software Engineer\",\n                \"description\": \"Looking for a software engineer with experience in Java\",\n                \"jobSkills\": [\n                    {\n                        \"skill\": {\n                            \"id\": \"3c020408-134f-40cd-8d1f-451239325957\",\n                            \"skillName\": \"Java\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Object-oriented programming language\"\n                        },\n                        \"company\": {\n                            \"id\": \"5ead5f1b-e04d-468b-a8b9-9c3c78857599\",\n                            \"name\": \"Tech Corp\",\n                            \"address\": {\n                                \"id\": \"1ce6502a-8370-4662-bffc-c2fe497141a7\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"234\",\n                                \"street\": \"Le Duan\"\n                            },\n                            \"webURL\": \"https://techcorp.com\",\n                            \"phone\": \"0111111111\",\n                            \"email\": \"hire@techcorp.com\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"INTERMEDIATE\",\n                        \"moreInfo\": \"This job requires expertise in Java programming.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"4447bfab-d83c-47f0-a0cf-ed2ebfd252ac\",\n                            \"skillName\": \"Python\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"High-level programming language\"\n                        },\n                        \"company\": {\n                            \"id\": \"5ead5f1b-e04d-468b-a8b9-9c3c78857599\",\n                            \"name\": \"Tech Corp\",\n                            \"address\": {\n                                \"id\": \"1ce6502a-8370-4662-bffc-c2fe497141a7\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"234\",\n                                \"street\": \"Le Duan\"\n                            },\n                            \"webURL\": \"https://techcorp.com\",\n                            \"phone\": \"0111111111\",\n                            \"email\": \"hire@techcorp.com\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"ADVANCED\",\n                        \"moreInfo\": \"Python skills are essential for data processing tasks.\"\n                    },\n                    {\n                        \"skill\": {\n                            \"id\": \"f91d4496-1e22-4812-861e-885da53e2fe4\",\n                            \"skillName\": \"ERP Implementation\",\n                            \"type\": \"TECHNICAL_SKILL\",\n                            \"skillDescription\": \"Managing ERP system deployment\"\n                        },\n                        \"company\": {\n                            \"id\": \"5ead5f1b-e04d-468b-a8b9-9c3c78857599\",\n                            \"name\": \"Tech Corp\",\n                            \"address\": {\n                                \"id\": \"1ce6502a-8370-4662-bffc-c2fe497141a7\",\n                                \"countryCode\": null,\n                                \"zipcode\": \"141222\",\n                                \"number\": \"234\",\n                                \"street\": \"Le Duan\"\n                            },\n                            \"webURL\": \"https://techcorp.com\",\n                            \"phone\": \"0111111111\",\n                            \"email\": \"hire@techcorp.com\",\n                            \"about\": \"A leading tech company\"\n                        },\n                        \"skillLevel\": \"BEGINNER\",\n                        \"moreInfo\": \"Data analysis skills are required to extract business insights.\"\n                    }\n                ]\n            }\n        ],\n        \"pageable\": {\n            \"pageNumber\": 1,\n            \"pageSize\": 10,\n            \"sort\": {\n                \"empty\": false,\n                \"sorted\": true,\n                \"unsorted\": false\n            },\n            \"offset\": 10,\n            \"paged\": true,\n            \"unpaged\": false\n        },\n        \"last\": false,\n        \"totalElements\": 24,\n        \"totalPages\": 3,\n        \"size\": 10,\n        \"number\": 1,\n        \"sort\": {\n            \"empty\": false,\n            \"sorted\": true,\n            \"unsorted\": false\n        },\n        \"first\": false,\n        \"numberOfElements\": 10,\n        \"empty\": false\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "EXPERIENCE",
+			"item": [
+				{
+					"name": "create-experience",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"companyName\": \"Nam Thang\",\r\n    \"fromDate\": \"22-02-2018\",\r\n    \"toDate\": \"22-12-2024\",\r\n    \"role\": \"Tech Lead\",\r\n    \"workDescription\": \"Do some thing!!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_gateway}}/api/v1/jobtify/experiences",
+							"host": [
+								"{{host_gateway}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobtify",
+								"experiences"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-API-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://farming-simulator.pstmn.io"
+		},
+		{
+			"key": "host_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "job_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "skill_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "skillId",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
