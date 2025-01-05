@@ -72,8 +72,9 @@ Jobtify là một nền tảng sáng tạo dành cho người tìm việc và nh
     ```
 
 5. **Chạy Dịch Vụ Redis**
+[File cấu hình redis: Nếu dùng file cấu hình này không cần thay đổi username, password, port Redis](assets/redis.conf) 
     ```bash
-    docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 -v <đường-dẫn-đến-redis.conf>:/etc/redis/redis.conf redis/redis-stack:latest
+    docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 -v <File-Cấu-Hình-Redis.conf>:/etc/redis/redis.conf redis/redis-stack:latest
     ```
 
 6. **Chạy Dịch Vụ PostgreSQL**
